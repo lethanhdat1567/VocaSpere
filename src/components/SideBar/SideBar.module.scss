@@ -1,0 +1,47 @@
+.wrap {
+    height: 100vh;
+    background-color: var(--sidebar-primary);
+    width: $sidebar-w;
+    position: relative;
+    width: 0;
+    transition: width ease 0.2s;
+    padding: 0;
+    .content {
+        display: none;
+    }
+    &.expand {
+        display: block;
+        padding: 10px;
+        .content {
+            display: block;
+            animation: fadeIn ease 2s;
+        }
+        width: $sidebar-w;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .list-end-btn {
+        cursor: pointer;
+        padding: 4px;
+        transition: ease 0.2s;
+        border-radius: 4px;
+        &:hover {
+            background-color: var(--sidebar-hover);
+        }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}

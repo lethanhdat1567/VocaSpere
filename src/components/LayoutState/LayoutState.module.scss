@@ -1,0 +1,11 @@
+.wrap {
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+    .body {
+        flex: 1;
+        .content {
+            min-height: calc(100vh - $header-h);
+        }
+    }
+}
