@@ -5,28 +5,28 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { loginBody, loginBodyType, registerResType } from '@/schemaValidations/authe.schema';
+import { registerBody, registerBodyType, registerResType } from '@/schemaValidations/authe.schema';
 import authApiRequest from '@/HttpRequest/authRequest';
 import { useRouter } from 'next/navigation';
 import { handleErrorApi } from '@/lib/utils';
 
-const formSchema = loginBody;
-
-export function FormLogin() {
+export function FormRegister() {
     const router = useRouter();
     // 1. Define your form.
-    const form = useForm<loginBodyType>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<registerBodyType>({
+        resolver: zodResolver(registerBody),
         defaultValues: {
+            username: '',
             email: '',
             password: '',
+            confirmPassword: '',
         },
     });
 
     // 2. Define a submit handler.
-    async function onSubmit(values: loginBodyType) {
+    async function onSubmit(values: registerBodyType) {
         try {
-            const result = await authApiRequest.login(values);
+            const result = await authApiRequest.register(values);
             await authApiRequest.auth({ data: result.payload as registerResType });
             router.push('/');
         } catch (error: any) {
@@ -39,12 +39,25 @@ export function FormLogin() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
                     control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                                <Input placeholder="username..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
                     name="email"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="email..." {...field} />
+                                <Input placeholder="email..." {...field} type="email" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -63,8 +76,21 @@ export function FormLogin() {
                         </FormItem>
                     )}
                 />
+                <FormField
+                    control={form.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Confirm Password</FormLabel>
+                            <FormControl>
+                                <Input placeholder="confirm password..." {...field} type="password" />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 <Button type="submit" className="w-full">
-                    Login
+                    Register
                 </Button>
             </form>
         </Form>

@@ -1,9 +1,12 @@
+'use client';
+
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { AlignJustify } from 'lucide-react';
 import { ButtonTheme } from '@/components/ButtonTheme/ButtonTheme';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import ButtonLogout from '@/components/ButtonLogout/ButtonLogout';
 
 const cx = classNames.bind(styles);
 
@@ -13,6 +16,8 @@ type Props = {
 };
 
 function Header({ isExpand, setIsExpand }: Props) {
+    const sessionToken = localStorage.getItem('accessToken');
+
     return (
         <div className={cx('wrap')}>
             <div className="container px-4 h-full">
@@ -22,12 +27,18 @@ function Header({ isExpand, setIsExpand }: Props) {
                     </button>
                     <div className={cx('btn-theme')}>
                         <ButtonTheme />
-                        <Link href={'/register'}>
-                            <Button variant="outline">Register</Button>
-                        </Link>
-                        <Link href={'/login'}>
-                            <Button>Login</Button>
-                        </Link>
+                        {sessionToken ? (
+                            <ButtonLogout />
+                        ) : (
+                            <>
+                                <Link href={'/register'}>
+                                    <Button variant="outline">Register</Button>
+                                </Link>
+                                <Link href={'/login'}>
+                                    <Button>Login</Button>
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

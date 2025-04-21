@@ -1,15 +1,21 @@
 import classNames from 'classnames/bind';
 import styles from './ButtonSocial.module.scss';
-import Image from 'next/image';
-import { imgs } from '../../../public/images';
+import Image, { StaticImageData } from 'next/image';
 
 const cx = classNames.bind(styles);
 
-function ButtonSocial() {
+type Props = {
+    data: {
+        name: string;
+        icon: StaticImageData;
+    };
+};
+
+function ButtonSocial({ data }: Props) {
     return (
         <div className={cx('wrap')}>
-            <Image src={imgs.google} alt="Google Logo" width={18} height={18} />
-            <p className={cx('desc')}>Continue with Google</p>
+            <Image src={data.icon} alt="Google Logo" width={18} height={18} />
+            <p className={cx('desc')}>Continue with {data.name}</p>
         </div>
     );
 }
