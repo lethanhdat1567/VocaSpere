@@ -7,12 +7,18 @@ import { handleErrorApi } from '@/lib/utils';
 import { LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function ButtonLogout() {
     const router = useRouter();
-    const refreshToken = localStorage.getItem('refreshToken');
+    const [refreshToken, setRefreshToken] = useState<string | null>();
+
+    useEffect(() => {
+        const refreshToken = localStorage.getItem('refreshToken');
+        setRefreshToken(refreshToken);
+    }, []);
 
     const handleLogout = async () => {
         try {

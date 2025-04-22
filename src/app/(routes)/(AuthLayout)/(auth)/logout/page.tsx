@@ -4,7 +4,7 @@ import { useAppContext } from '@/app/AppProvider';
 import authApiRequest from '@/HttpRequest/authRequest';
 import { handleErrorApi } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function Logout() {
     const router = useRouter();
@@ -12,10 +12,15 @@ function Logout() {
     const { setUser } = useAppContext();
     const searchParams = useSearchParams();
     const accessToken = searchParams.get('sessionToken');
-    const localStorageSessionToken = localStorage.getItem('accessToken');
+    const [sessionToken, setAccessToken] = useState<string | null>('');
 
     useEffect(() => {
-        if (accessToken === localStorageSessionToken) {
+        const accessToken = localStorage.getItem('accessToken');
+        setAccessToken(accessToken);
+    }, []);
+
+    useEffect(() => {
+        if (accessToken === sessionToken) {
             try {
                 authApiRequest.logoutFromNextClientToNextServer({ force: true }).then(() => {
                     setUser(null);
@@ -25,7 +30,7 @@ function Logout() {
                 handleErrorApi(error);
             }
         }
-    }, [accessToken, router, localStorageSessionToken, pathname, setUser]);
+    }, [accessToken, router, sessionToken, pathname, setUser]);
 
     return <div>Page</div>;
 }

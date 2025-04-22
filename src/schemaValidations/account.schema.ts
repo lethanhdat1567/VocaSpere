@@ -6,6 +6,7 @@ export const AccountRes = z
             id: z.number(),
             username: z.string(),
             email: z.string(),
+            avatar: z?.string(),
         }),
         message: z.string(),
     })

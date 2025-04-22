@@ -15,7 +15,6 @@ type Props = {
 
 function SideBar({ isExpand, setIsExpand }: Props) {
     const pathname = usePathname();
-    console.log(pathname);
 
     return (
         <div className={cx('wrap', { expand: isExpand })}>

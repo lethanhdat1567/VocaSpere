@@ -1,12 +1,19 @@
 'use client';
 
 import authApiRequest from '@/HttpRequest/authRequest';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { differenceInHours } from 'date-fns';
 
 function SliceSession() {
-    const refreshToken = localStorage.getItem('refreshToken');
-    const expiresAt = localStorage.getItem('expiresAt');
+    const [refreshToken, setRefreshToken] = useState<string | null>();
+    const [expiresAt, setExpiresAt] = useState<string | null>();
+
+    useEffect(() => {
+        const refreshToken = localStorage.getItem('refreshToken');
+        const expiresAt = localStorage.getItem('expiresAt');
+        setRefreshToken(refreshToken);
+        setExpiresAt(expiresAt);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(async () => {
