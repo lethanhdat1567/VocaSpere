@@ -107,7 +107,7 @@ const request = async <Response>(
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
                 localStorage.removeItem('user');
-                localStorage.removeItem('expiresIn');
+                localStorage.removeItem('expiresAt');
                 location.href = '/login';
             } else {
                 const sessionToken = (options?.headers as any).Authorization.split(' ')[1];

@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 const cx = classNames.bind(styles);
 
 function LayoutState({ children }: { children: React.ReactNode }) {
-    const [isExpand, setIsExpand] = useState(false);
+    const [isExpand, setIsExpand] = useState(true);
 
     return (
         <div className={cx('wrap')}>

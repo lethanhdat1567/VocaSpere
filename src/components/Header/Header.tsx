@@ -3,12 +3,11 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { AlignJustify } from 'lucide-react';
-import { ButtonTheme } from '@/components/ButtonTheme/ButtonTheme';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import ButtonLogout from '@/components/ButtonLogout/ButtonLogout';
 import SliceSession from '@/components/SliceSession/SliceSession';
 import { useAppContext } from '@/app/AppProvider';
+import AccountMenu from '@/components/AccountMenu/AccountMenu';
 
 const cx = classNames.bind(styles);
 
@@ -28,9 +27,8 @@ function Header({ isExpand, setIsExpand }: Props) {
                         <AlignJustify />
                     </button>
                     <div className={cx('btn-theme')}>
-                        <ButtonTheme />
                         {user ? (
-                            <ButtonLogout />
+                            <AccountMenu />
                         ) : (
                             <>
                                 <Link href={'/register'}>

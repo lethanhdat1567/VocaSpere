@@ -77,6 +77,7 @@
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
     --sidebar-hover: #e8e8e8;
+    --text-secondary: #5e5e5a;
 }
 
 .dark {
@@ -112,6 +113,7 @@
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
     --sidebar-hover: #383838;
+    --text-secondary: #9b9b9b;
 }
 
 @layer base {

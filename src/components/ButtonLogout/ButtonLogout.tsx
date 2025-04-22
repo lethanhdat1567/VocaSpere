@@ -1,10 +1,14 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import classNames from 'classnames/bind';
+import styles from './ButtonLogout.module.scss';
 import authApiRequest from '@/HttpRequest/authRequest';
 import { handleErrorApi } from '@/lib/utils';
+import { LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+
+const cx = classNames.bind(styles);
 
 function ButtonLogout() {
     const router = useRouter();
@@ -21,9 +25,10 @@ function ButtonLogout() {
     };
 
     return (
-        <Button variant="outline" onClick={handleLogout}>
-            Logout
-        </Button>
+        <div className={cx('list-item')} onClick={handleLogout}>
+            <LogOut color="oklch(.704 .191 22.216)" />
+            <p className={cx('list-item-text')}>Logout</p>
+        </div>
     );
 }
 
