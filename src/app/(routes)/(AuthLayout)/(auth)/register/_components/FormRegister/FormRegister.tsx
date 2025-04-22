@@ -9,9 +9,11 @@ import { registerBody, registerBodyType, registerResType } from '@/schemaValidat
 import authApiRequest from '@/HttpRequest/authRequest';
 import { useRouter } from 'next/navigation';
 import { handleErrorApi } from '@/lib/utils';
+import { useAppContext } from '@/app/AppProvider';
 
 export function FormRegister() {
     const router = useRouter();
+    const { setUser } = useAppContext();
     // 1. Define your form.
     const form = useForm<registerBodyType>({
         resolver: zodResolver(registerBody),
@@ -28,6 +30,7 @@ export function FormRegister() {
         try {
             const result = await authApiRequest.register(values);
             await authApiRequest.auth({ data: result.payload as registerResType });
+            setUser((result.payload as any).data.account);
             router.push('/');
         } catch (error: any) {
             handleErrorApi({ error, setError: form.setError });

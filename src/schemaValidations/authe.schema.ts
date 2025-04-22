@@ -28,6 +28,17 @@ export const loginBody = z
     .strict();
 
 export type loginBodyType = z.TypeOf<typeof loginBody>;
+
+export const loginSocialBody = z.object({
+    facebookId: z.string().optional(),
+    googleId: z.string().optional(),
+    email: z.string().email(),
+    username: z.string().optional(),
+    avatar: z.string().url().optional(),
+});
+
+export type loginSocialBodyType = z.infer<typeof loginSocialBody>;
+
 export const RegisterRes = z.object({
     data: z.object({
         account: z.object({
@@ -46,3 +57,10 @@ export const RegisterRes = z.object({
 });
 
 export type registerResType = z.TypeOf<typeof RegisterRes>;
+
+export const SlideSessionBody = z.object({}).strict();
+
+export type SlideSessionBodyType = z.TypeOf<typeof SlideSessionBody>;
+export const SlideSessionRes = RegisterRes;
+
+export type SlideSessionResType = z.TypeOf<typeof SlideSessionRes>;

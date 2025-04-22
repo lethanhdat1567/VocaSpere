@@ -2,6 +2,7 @@ export async function POST(req: Request) {
     const { data } = await req.json();
 
     const sessionToken = data.data.token.accessToken;
+    const expiresValue = data.data.token.accessTokenExpiresIn;
     if (!sessionToken) {
         return Response.json(
             {
@@ -12,7 +13,7 @@ export async function POST(req: Request) {
             },
         );
     }
-    const expiresAt = new Date(Date.now() + data.data.token.accessTokenExpiresIn).toUTCString();
+    const expiresAt = new Date(Date.now() + expiresValue).toUTCString();
 
     return Response.json(
         {

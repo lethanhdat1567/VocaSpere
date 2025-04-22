@@ -90,7 +90,6 @@ const request = async <Response>(
     };
 
     if (!res.ok) {
-        console.log(res.status);
         if (res.status === ENTITY_ERROR_STATUS) {
             throw new EntityError(
                 data as {
@@ -107,6 +106,8 @@ const request = async <Response>(
                 });
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
+                localStorage.removeItem('user');
+                localStorage.removeItem('expiresIn');
                 location.href = '/login';
             } else {
                 const sessionToken = (options?.headers as any).Authorization.split(' ')[1];
@@ -120,12 +121,17 @@ const request = async <Response>(
         }
     }
     if (isClient()) {
-        if (['auth/login', 'auth/register'].some((item) => item === normalizePath(url as string))) {
+        if (['auth/login', 'auth/register', 'auth/login-social'].some((item) => item === normalizePath(url as string))) {
             localStorage.setItem('accessToken', (payload as registerResType).data.token.accessToken);
             localStorage.setItem('refreshToken', (payload as registerResType).data.token.refreshToken);
+            const expiresInMs = (payload as any).data.token.accessTokenExpiresIn;
+            const expiresAt = new Date(Date.now() + expiresInMs);
+            localStorage.setItem('expiresAt', expiresAt.toISOString());
         } else if ('api/auth/logout' === normalizePath(url as string)) {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
+            localStorage.removeItem('user');
+            localStorage.removeItem('expiresAt');
         }
     }
 

@@ -7,6 +7,8 @@ import { ButtonTheme } from '@/components/ButtonTheme/ButtonTheme';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import ButtonLogout from '@/components/ButtonLogout/ButtonLogout';
+import SliceSession from '@/components/SliceSession/SliceSession';
+import { useAppContext } from '@/app/AppProvider';
 
 const cx = classNames.bind(styles);
 
@@ -16,7 +18,7 @@ type Props = {
 };
 
 function Header({ isExpand, setIsExpand }: Props) {
-    const sessionToken = localStorage.getItem('accessToken');
+    const { user } = useAppContext();
 
     return (
         <div className={cx('wrap')}>
@@ -27,7 +29,7 @@ function Header({ isExpand, setIsExpand }: Props) {
                     </button>
                     <div className={cx('btn-theme')}>
                         <ButtonTheme />
-                        {sessionToken ? (
+                        {user ? (
                             <ButtonLogout />
                         ) : (
                             <>
@@ -39,6 +41,7 @@ function Header({ isExpand, setIsExpand }: Props) {
                                 </Link>
                             </>
                         )}
+                        <SliceSession />
                     </div>
                 </div>
             </div>

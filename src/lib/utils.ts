@@ -25,6 +25,7 @@ export const handleErrorApi = ({ error, setError }: { error: any; setError?: Use
             });
         });
     } else {
+        console.log(error);
         toast.error(error.payload.message ?? 'Loi khong xac dinh');
     }
 };
